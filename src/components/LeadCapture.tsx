@@ -16,18 +16,12 @@ export default function LeadCapture() {
 
     const { error } = await supabase.from("subscribers").insert([{ email }]);
 
-    if (error) {
-      if (error.code === "23505") {
-        // Error de duplicado en Postgres
-        setStatus("success");
-        setMessage("¡Ya estabas registrado! Te mantendremos al tanto de las novedades.");
-      } else {
-        setStatus("error");
-        setMessage("Hubo un error al guardar tu mail. Intentalo de nuevo.");
-      }
+    if (error && error.code !== "23505") {
+      setStatus("error");
+      setMessage("Hubo un error al guardar tu correo. Intentalo de nuevo.");
     } else {
       setStatus("success");
-      setMessage("¡Suscripción exitosa! Te enviamos los mejores recursos a tu casilla.");
+      setMessage("¡Gracias por sumarte! Te enviaremos las novedades del Holding cada semana.");
       setEmail("");
     }
   };
@@ -36,15 +30,15 @@ export default function LeadCapture() {
     <section className="bg-gradient-to-r from-indigo-950/80 via-slate-900 to-indigo-950/80 border border-indigo-500/30 rounded-2xl p-8 my-12 text-center shadow-2xl relative overflow-hidden">
       <div className="max-w-2xl mx-auto relative z-10">
         <span className="bg-indigo-500/20 text-indigo-300 text-xs font-semibold px-3 py-1 rounded-full border border-indigo-500/30 uppercase tracking-wider">
-          Recursos Exclusivos
+          Comunidad K-Media
         </span>
         
         <h2 className="text-2xl md:text-3xl font-extrabold text-white mt-4">
-          Descargá la Guía de 50 Prompts Pro para IA
+          Sumate al Newsletter Semanal de IA
         </h2>
         
         <p className="text-slate-300 text-sm mt-2 leading-relaxed">
-          Recibí semanalmente nuevas herramientas auditadas, flujos de trabajo de automatización y prompts listos para usar.
+          Recibí en tu casilla la curaduría de nuevas herramientas auditadas, análisis de mercado y flujos de automatización para creadores. Sin humo ni spam.
         </p>
 
         {status === "success" ? (
@@ -66,7 +60,7 @@ export default function LeadCapture() {
               disabled={status === "loading"}
               className="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm px-6 py-3 rounded-xl transition-all shadow-lg shadow-indigo-600/30 disabled:opacity-50 whitespace-nowrap"
             >
-              {status === "loading" ? "Guardando..." : "Obtener Acceso"}
+              {status === "loading" ? "Procesando..." : "Suscribirme"}
             </button>
           </form>
         )}
