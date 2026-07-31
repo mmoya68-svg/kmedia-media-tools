@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import LeadCapture from "@/components/LeadCapture";
 
 export const revalidate = 0;
 
@@ -10,7 +11,7 @@ export default async function Home() {
       <div className="max-w-6xl mx-auto">
         
         {/* Header */}
-        <header className="text-center py-12 border-b border-slate-800 mb-12">
+        <header className="text-center py-12 border-b border-slate-800 mb-8">
           <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
             K-Media Hub
           </span>
@@ -22,8 +23,11 @@ export default async function Home() {
           </p>
         </header>
 
+        {/* Captura de Leads (Newsletter / PDF) */}
+        <LeadCapture />
+
         {/* Grid de Productos desde Supabase */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           {tools && tools.length > 0 ? (
             tools.map((tool: any) => (
               <div 
